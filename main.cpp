@@ -1,4 +1,5 @@
 #include "opencv2/highgui/highgui.hpp"
+#include <opencv2/imgproc.hpp>
 #include<iostream>
 using namespace cv;
 
@@ -40,6 +41,12 @@ int main(int argc, char** argv)
 	imwrite("green.jpg", channels[1]);
 	imwrite("red.jpg", channels[2]);
 	*/
+
+	//draw a line on the img
+	Mat img3 = chs[0].clone();
+	Point pt1(30, 30), pt2(300, 300);
+	line(img3, pt1, pt2, Scalar(255,0,0),5, LINE_8);
+	imshow("line", img3);
 	waitKey(0);
 
 	destroyAllWindows();
