@@ -1,6 +1,6 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/imgproc.hpp>
-#include "noise.h"
+#include "noise/noise.h"
 #include<iostream>
 using namespace cv;
 
