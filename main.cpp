@@ -57,9 +57,18 @@ int main(int argc, char** argv)
 	Mat imgRow = img3.row(50);
 	imshow("imgRow50", imgRow);
 	*/
-
+	/*添加noise
 	gaussian_noise(img2);
 	saltpepper_noise(img2);
+	*/
+
+	//使用blur和gaussianblur
+	Mat blurfirst = Mat::zeros(img2.size(), img2.type());
+	Mat boxfirst = Mat::zeros(img2.size(), img2.type());
+	GaussianBlur(img2, blurfirst, Size(9, 9), 15.0, 6.0);
+	blur(img2, boxfirst, Size(7, 7));
+	imshow("gaussian", blurfirst);
+	imshow("box", boxfirst);
 	waitKey(0);
 
 	destroyAllWindows();
