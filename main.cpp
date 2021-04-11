@@ -1,6 +1,6 @@
 #include "opencv2/highgui/highgui.hpp"
 #include <opencv2/imgproc.hpp>
-
+#include "noise.h"
 #include<iostream>
 using namespace cv;
 
@@ -52,9 +52,14 @@ int main(int argc, char** argv)
 	*/
 
 	/*获取图片某一行，所有列的值，并画出来*/
+	/*
 	Mat img3 = chs[0].clone();
 	Mat imgRow = img3.row(50);
 	imshow("imgRow50", imgRow);
+	*/
+
+	gaussian_noise(img2);
+	saltpepper_noise(img2);
 	waitKey(0);
 
 	destroyAllWindows();

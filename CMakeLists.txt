@@ -11,6 +11,7 @@ set(opencv_libs opencv_world451d.lib)
 
 #设定include
 include_directories(${opencv_include})
+include_directories("G:/IntroCV/UdacityIntroToCV")
 #设定lib位置
 link_directories(${opencv_lib_dir})
 #设定引用的lib名称
