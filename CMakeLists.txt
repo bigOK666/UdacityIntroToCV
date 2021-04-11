@@ -12,7 +12,7 @@ set(opencv_libs opencv_world451d.lib)
 #设定noise代码文件路径
 set(NOISE "./noise/noise.cpp" "./noise/noise.h")
 
-#查找指定目录下所有cpp与h文件，并存放到指定变量名SC_FILES中
+#查找当前目录下所有cpp与h文件，并存放到指定变量名SC_FILES中
 FILE(GLOB SC_FILES "*.cpp", "*.h")
 #设定include
 include_directories(${opencv_include})
