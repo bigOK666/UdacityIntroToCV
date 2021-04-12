@@ -71,12 +71,30 @@ int main(int argc, char** argv)
 	imshow("gaussian", blurfirst);
 	imshow("box", boxfirst);
 	*/
+	//用中位数滤波去除salt pepper噪声
 	saltpepper_noise(img2);
 	//imshow("sp", img2);
 	Mat median_blur = Mat::zeros(img2.size(), img2.type());
 	medianBlur(img2, median_blur,5);
 	imshow("median", median_blur);
-
+	//锐化中位数滤波后的图片
+	Mat sharp_img = Mat::zeros(median_blur.size(), median_blur.type());
+	//std::cout << median_blur.type() << std::endl;
+	Mat kernel_enhance = (Mat_<float>(3, 3) << 0, 0, 0, 0, 2.0, 0, 0, 0, 0);
+	
+	//Mat kernel_box = (Mat_<float>(3, 3) << 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9, 1.0 / 9);
+	Mat kernel_box = Mat::ones(kernel_enhance.size(), kernel_enhance.type())/(float)9.0;
+	Mat kernel_sharp = kernel_enhance - kernel_box;
+	std::cout << kernel_sharp << std::endl;
+	std::cout << kernel_sharp.size() << std::endl;
+	waitKey(0);
+	std::cout << kernel_sharp.at<float>(1, 1) << std::endl;
+	//kernel_sharp.at<float>(1, 1) = 2.0;
+	waitKey(0);
+	//kernel_sharp -= (Mat::ones(3, 3, sharp_img.type()) / (float)9);
+	//std::cout << kernel_sharp;
+	filter2D(median_blur, sharp_img, -1, kernel_sharp);
+	imshow("sharp", sharp_img);
 	waitKey(0);
 
 	destroyAllWindows();
