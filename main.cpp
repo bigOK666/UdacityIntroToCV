@@ -63,12 +63,20 @@ int main(int argc, char** argv)
 	*/
 
 	// π”√blur∫Õgaussianblur
+	/*
 	Mat blurfirst = Mat::zeros(img2.size(), img2.type());
 	Mat boxfirst = Mat::zeros(img2.size(), img2.type());
 	GaussianBlur(img2, blurfirst, Size(9, 9), 15.0, 6.0);
 	blur(img2, boxfirst, Size(7, 7));
 	imshow("gaussian", blurfirst);
 	imshow("box", boxfirst);
+	*/
+	saltpepper_noise(img2);
+	//imshow("sp", img2);
+	Mat median_blur = Mat::zeros(img2.size(), img2.type());
+	medianBlur(img2, median_blur,5);
+	imshow("median", median_blur);
+
 	waitKey(0);
 
 	destroyAllWindows();
