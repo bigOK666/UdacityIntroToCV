@@ -71,6 +71,7 @@ int main(int argc, char** argv)
 	imshow("gaussian", blurfirst);
 	imshow("box", boxfirst);
 	*/
+	/*
 	//用中位数滤波去除salt pepper噪声
 	saltpepper_noise(img2);
 	//imshow("sp", img2);
@@ -95,6 +96,19 @@ int main(int argc, char** argv)
 	//std::cout << kernel_sharp;
 	filter2D(median_blur, sharp_img, -1, kernel_sharp);
 	imshow("sharp", sharp_img);
+	*/
+	Mat temp = img2(Range(50, 80), Range(20, 40));
+	imshow("original", img2);
+	imshow("temp", temp);
+	Mat result = Mat(img2.rows - temp.rows + 1, img2.cols - temp.cols + 1, CV_32FC1);
+	matchTemplate(img2, temp, result, TM_CCORR_NORMED);
+	normalize(result, result, 0, 1, NORM_MINMAX);
+	double minVal, maxVal;
+	Point minLoc, maxLoc;
+	minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
+	imshow("result", result);
+	std::cout << maxLoc << std::endl;
+
 	waitKey(0);
 
 	destroyAllWindows();
