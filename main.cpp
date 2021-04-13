@@ -97,6 +97,8 @@ int main(int argc, char** argv)
 	filter2D(median_blur, sharp_img, -1, kernel_sharp);
 	imshow("sharp", sharp_img);
 	*/
+	//template matching
+	/*
 	Mat temp = img2(Range(50, 80), Range(20, 40));
 	imshow("original", img2);
 	imshow("temp", temp);
@@ -108,6 +110,22 @@ int main(int argc, char** argv)
 	minMaxLoc(result, &minVal, &maxVal, &minLoc, &maxLoc);
 	imshow("result", result);
 	std::cout << maxLoc << std::endl;
+	*/
+	Mat blurred, blurred_gray;
+	GaussianBlur(img2, blurred, Size(3, 3), 0, 0);
+	cvtColor(blurred, blurred_gray, COLOR_BGR2GRAY);
+
+	Mat grad_x, grad_y;
+	Sobel(blurred_gray, grad_x, -1, 1, 0);
+	Sobel(blurred_gray, grad_y, -1, 0, 1);
+
+	imshow("blurred_gray",blurred_gray);
+	imshow("grad_x", grad_x);
+	imshow("grad_y", grad_y);
+
+	Mat grad;
+	addWeighted(grad_x, 0.5, grad_y, 0.5, 0, grad);
+	imshow("grad", grad);
 
 	waitKey(0);
 
