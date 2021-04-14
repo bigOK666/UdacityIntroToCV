@@ -111,6 +111,9 @@ int main(int argc, char** argv)
 	imshow("result", result);
 	std::cout << maxLoc << std::endl;
 	*/
+
+	//Sobel edge detection
+	/*
 	Mat blurred, blurred_gray;
 	GaussianBlur(img2, blurred, Size(3, 3), 0, 0);
 	cvtColor(blurred, blurred_gray, COLOR_BGR2GRAY);
@@ -126,6 +129,16 @@ int main(int argc, char** argv)
 	Mat grad;
 	addWeighted(grad_x, 0.5, grad_y, 0.5, 0, grad);
 	imshow("grad", grad);
+	*/
+
+	//Canny Edge detection
+	Mat img2_gray,img2_edge;
+	cvtColor(img2, img2_gray, COLOR_BGR2GRAY);
+	imshow("gray",img2_gray);
+
+	Canny(img2_gray, img2_edge, 100, 300);
+
+	imshow("edge",img2_edge);
 
 	waitKey(0);
 
