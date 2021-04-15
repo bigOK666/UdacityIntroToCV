@@ -1,7 +1,9 @@
-#include "opencv2/highgui/highgui.hpp"
+#include "opencv2/highgui.hpp"
 #include <opencv2/imgproc.hpp>
+#include"opencv2/imgcodecs.hpp"
 #include "noise/noise.h"
 #include<iostream>
+#include<vector>
 using namespace cv;
 
 int main(int argc, char** argv)
@@ -132,14 +134,38 @@ int main(int argc, char** argv)
 	*/
 
 	//Canny Edge detection
-	Mat img2_gray,img2_edge;
+	
+	Mat img2_gray,img2_edge, img2_color;
 	cvtColor(img2, img2_gray, COLOR_BGR2GRAY);
 	imshow("gray",img2_gray);
 
-	Canny(img2_gray, img2_edge, 100, 300);
-
+	Canny(img2_gray, img2_edge, 200, 400);
+	cvtColor(img2_edge, img2_color, COLOR_GRAY2BGR);
 	imshow("edge",img2_edge);
-
+	//imshow("img2_color", img2_color);
+	
+	//Hough Line transform
+	std::vector<Vec2f> lines;
+	HoughLines(img2_edge, lines, 1, CV_PI / 180, 80);
+	std::cout << lines.size();
+	
+	//draw the lines
+	
+	
+	for (auto l : lines) {
+		float rho = l[0], theta = l[1];
+		Point pt1, pt2;
+		double a = cos(theta), b = sin(theta);
+		double x0 = a * rho, y0 = b * rho;
+		//计算距离(x0,y0) 1000 步长的p1
+		pt1.x = cvRound(x0 + 1000 * (-b));
+		pt1.y = cvRound(y0 + 1000 * a);
+		pt2.x = cvRound(x0 - 1000 * (-b));
+		pt2.y = cvRound(y0 - 1000 * a);
+		line(img2_color, pt1, pt2, Scalar(0, 0, 255), 3, LINE_AA);
+	}
+	imshow("img2_hough", img2_color);
+	
 	waitKey(0);
 
 	destroyAllWindows();
